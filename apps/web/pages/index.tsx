@@ -17,6 +17,13 @@ export function Index() {
             </h1>
           </div>
 
+          <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+            <span className="block">Ready to dive in?</span>
+            <span className="block text-indigo-600">
+              Start your free trial today.
+            </span>
+          </h2>
+
           <div id="hero" className="rounded">
             <div className="text-container">
               <h2>
