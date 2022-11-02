@@ -4,7 +4,8 @@ import styles from './button.module.css';
 export const getButtonDynamicStyles = (
   variant: ButtonProps['variant'],
   status: ButtonProps['status'],
-  size: ButtonProps['size']
+  size: ButtonProps['size'],
+  fullWidth: ButtonProps['fullWidth']
 ) => {
   const dynamicStyles = [
     // ghost primary
@@ -69,6 +70,8 @@ export const getButtonDynamicStyles = (
     size === 'medium' && styles['button-size-medium'],
     // size large
     size === 'large' && styles['button-size-large'],
+    // full width
+    fullWidth && 'w-full',
   ];
 
   return dynamicStyles;

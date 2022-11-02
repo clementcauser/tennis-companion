@@ -17,6 +17,7 @@
     "paths": {
       "@tennis-companion/adapters": ["libs/adapters/src/index.ts"],
       "@tennis-companion/domain": ["libs/domain/src/index.ts"],
+      "@tennis-companion/features/auth": ["libs/features/auth/src/index.ts"],
       "@tennis-companion/firebase": ["libs/firebase/src/index.ts"],
       "@tennis-companion/uikit": ["libs/uikit/src/index.ts"]
     }

@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef } from 'react';
+import { ComponentPropsWithRef } from 'react';
 
 type ButtonStatus = 'primary' | 'info' | 'success' | 'warning' | 'danger';
 
@@ -10,11 +10,10 @@ type ButtonCommonProps = {
   variant?: ButtonVariant;
   status?: ButtonStatus;
   size?: ButtonSize;
+  fullWidth?: boolean;
 };
 
-export type ButtonProps = Omit<
-  ComponentPropsWithoutRef<'button'>,
-  'className'
-> &
+export type ButtonProps = Omit<ComponentPropsWithRef<'button'>, 'className'> &
   ButtonCommonProps;
-export type LinkButtonProps = ComponentPropsWithoutRef<'a'> & ButtonCommonProps;
+
+export type LinkButtonProps = ComponentPropsWithRef<'a'> & ButtonCommonProps;

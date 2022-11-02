@@ -8,6 +8,7 @@ export const Button = ({
   variant = 'ghost',
   status = 'primary',
   size = 'medium',
+  fullWidth = false,
   ...rest
 }: ButtonProps) => {
   return (
@@ -16,7 +17,7 @@ export const Button = ({
       data-testid="button"
       className={clsx(
         styles['button-common'],
-        getButtonDynamicStyles(variant, status, size)
+        getButtonDynamicStyles(variant, status, size, fullWidth)
       )}
       {...rest}
     >

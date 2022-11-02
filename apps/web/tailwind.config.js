@@ -4,7 +4,7 @@ const { join } = require('path');
 module.exports = {
   presets: [require('../../tailwind-workspace-preset.js')],
   purge: [
-    join(__dirname, 'pages/**/*.{js,ts,jsx,tsx}'),
+    join(__dirname, '**/*.{js,ts,jsx,tsx}'),
     ...createGlobPatternsForDependencies(__dirname),
   ],
   darkMode: 'media', // or 'media' or 'class'
@@ -15,5 +15,4 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-  mode: 'jit',
 };
