@@ -1,8 +1,12 @@
 import { RegisterForm } from '@tennis-companion/features/auth';
 import { Card } from '@tennis-companion/uikit';
+import { useAppDispatch } from '../../hooks/redux';
+import { createUserThunk } from '../../store/slices/usersSlice';
 import AuthLayout from '../../components/layouts/AuthLayout';
 
 const RegisterPage = () => {
+  const dispatch = useAppDispatch();
+
   return (
     <AuthLayout>
       <Card title="Créer un compte">
@@ -10,7 +14,9 @@ const RegisterPage = () => {
           Créez votre compte pour accéder à toutes les fonctionnalités de
           l&apos;application.
         </p>
-        <RegisterForm onSubmit={console.log} />
+        <RegisterForm
+          onSubmit={(values) => dispatch(createUserThunk(values))}
+        />
       </Card>
     </AuthLayout>
   );

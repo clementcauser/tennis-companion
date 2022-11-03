@@ -1,7 +1,7 @@
 import { UserPresenter } from '@tennis-companion/adapters';
-import { IUseCases } from './interfaces';
+import { IPresenters, IUseCases } from './interfaces';
 
-const presenters = (usecases: IUseCases) => {
+const presenters = (usecases: IUseCases): IPresenters => {
   return {
     user: new UserPresenter(usecases.user),
   };

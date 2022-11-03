@@ -8,14 +8,11 @@ export class UserUseCase implements IUserUseCase {
 
   async createUser(userDto: CreateUserDtoInput): Promise<CreateUserDtoOutput> {
     try {
-      const user = await this.userRepository.createUser(userDto);
+      const { uid } = await this.userRepository.createUser(userDto);
 
-      const createdUser = new CreateUserDtoOutput({
-        email: user?.email ?? '',
-        id: user.uid,
-        username: user?.displayName ?? user?.email ?? '',
-        avatarURL: user?.photoURL ?? '',
-      });
+      const user = await this.userRepository.getUserById(uid);
+
+      const createdUser = new CreateUserDtoOutput(user);
 
       return createdUser;
     } catch (err) {

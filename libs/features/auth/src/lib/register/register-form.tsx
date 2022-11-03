@@ -16,6 +16,7 @@ interface RegisterFormProps {
 const RegisterForm = ({ onSubmit }: RegisterFormProps) => {
   const { handleSubmit, control } = useForm<RegisterFormValues>({
     resolver: yupResolver(registerFormValidationSchema),
+    defaultValues: { confirmPassword: '', email: '', password: '' },
   });
 
   return (
