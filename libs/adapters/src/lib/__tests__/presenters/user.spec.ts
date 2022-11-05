@@ -1,10 +1,9 @@
 import {
-  CreateUserDtoOutput,
   ICreateUserDtoInput,
   IUserRepository,
+  User,
   UserUseCase,
 } from '@tennis-companion/domain';
-import { User } from 'firebase/auth';
 import { UserPresenter } from '../../presenters';
 
 const FAKE_DATA = {
@@ -14,9 +13,22 @@ const FAKE_DATA = {
 };
 
 class UserRepository implements IUserRepository {
-  createUser(userDTO: ICreateUserDtoInput): Promise<User> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  createUserWithEmailAndPassword(userDTO: ICreateUserDtoInput): Promise<void> {
+    return new Promise((resolve) => resolve());
+  }
+
+  getUserById(id: string): Promise<User> {
     return new Promise((resolve) =>
-      resolve({ ...FAKE_DATA, email: userDTO.email } as User)
+      resolve(
+        new User({
+          createdAt: 1667652710221,
+          email: 'some@email.com',
+          id,
+          updatedAt: 1667652710221,
+          username: 'testUser',
+        })
+      )
     );
   }
 }
@@ -41,19 +53,12 @@ describe('User Presenter', () => {
     expect(createUserSpy).toBeCalled();
   });
 
-  it('expects to return a user', async () => {
+  it('expects to return void', async () => {
     const result = await userPresenter.createUser({
       email: FAKE_DATA.email,
       password: 'helloworld',
     });
 
-    const expectedResult = new CreateUserDtoOutput({
-      email: FAKE_DATA.email,
-      id: FAKE_DATA.uid,
-      username: FAKE_DATA.displayName,
-      avatarURL: '',
-    });
-
-    expect(result).toStrictEqual(expectedResult);
+    expect(result).not.toBeDefined();
   });
 });

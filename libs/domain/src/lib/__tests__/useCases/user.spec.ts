@@ -1,20 +1,24 @@
-import { User } from 'firebase/auth';
-import {
-  CreateUserDtoInput,
-  CreateUserDtoOutput,
-  ICreateUserDtoInput,
-} from '../../dto';
+import { CreateUserDtoInput, ICreateUserDtoInput } from '../../dto';
+import { User } from '../../entities';
 import { IUserRepository, UserUseCase } from '../../useCases';
 
 class Repository implements IUserRepository {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  createUser(dto: ICreateUserDtoInput): Promise<User> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  createUserWithEmailAndPassword(userDTO: ICreateUserDtoInput): Promise<void> {
+    return new Promise((resolve) => resolve);
+  }
+
+  getUserById(id: string): Promise<User> {
     return new Promise((resolve) =>
-      resolve({
-        email: dto.email,
-        displayName: 'John',
-        uid: '123qweasdzxc',
-      } as User)
+      resolve(
+        new User({
+          createdAt: 1667652710221,
+          email: 'some@email.com',
+          id,
+          updatedAt: 1667652710221,
+          username: 'testUser',
+        })
+      )
     );
   }
 }
@@ -28,13 +32,9 @@ const userRepository = new Repository();
 const userUsecase = new UserUseCase(userRepository);
 
 const spy = jest
-  .spyOn(userRepository, 'createUser')
-  .mockImplementation(async ({ email }) => {
-    return {
-      email,
-      displayName: 'John Doe',
-      uid: '490382409238',
-    } as User;
+  .spyOn(userRepository, 'createUserWithEmailAndPassword')
+  .mockImplementation(async () => {
+    return;
   });
 
 beforeEach(() => {
@@ -49,16 +49,10 @@ describe('User useCase', () => {
       expect(spy).toBeCalled();
     });
 
-    it('should return a user', async () => {
+    it('should return void', async () => {
       const result = await userUsecase.createUser(userDto);
-      const expectedResult = new CreateUserDtoOutput({
-        email: 'hello@world.com',
-        id: '490382409238',
-        username: 'John Doe',
-        avatarURL: '',
-      });
 
-      expect(result).toStrictEqual(expectedResult);
+      expect(result).not.toBeDefined();
     });
   });
 });

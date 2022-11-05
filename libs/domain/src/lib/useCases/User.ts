@@ -1,24 +1,18 @@
 import { FirebaseError } from 'firebase/app';
-import { CreateUserDtoInput, CreateUserDtoOutput } from '../dto';
+import { CreateUserDtoInput, ICreateUserDtoOutput } from '../dto';
 import { IUserUseCase } from './interfaces/IUser';
 import { IUserRepository } from './repository-interfaces/IUser';
 
 export class UserUseCase implements IUserUseCase {
   constructor(private readonly userRepository: IUserRepository) {}
 
-  async createUser(userDto: CreateUserDtoInput): Promise<CreateUserDtoOutput> {
+  async createUser(userDto: CreateUserDtoInput): Promise<ICreateUserDtoOutput> {
     try {
-      const { uid } = await this.userRepository.createUser(userDto);
-
-      const user = await this.userRepository.getUserById(uid);
-
-      const createdUser = new CreateUserDtoOutput(user);
-
-      return createdUser;
+      return this.userRepository.createUserWithEmailAndPassword(userDto);
     } catch (err) {
-      const error = err as FirebaseError;
+      const { message } = err as FirebaseError;
 
-      throw Error(error.message);
+      throw Error(message);
     }
   }
 }

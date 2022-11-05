@@ -1,9 +1,9 @@
 import {
   CreateUserDtoInput,
-  CreateUserDtoOutput,
-  User,
+  ICreateUserDtoOutput,
   UserUseCase,
 } from '@tennis-companion/domain';
+import { FirebaseError } from 'firebase/app';
 import { IUserPresenter } from './interfaces';
 
 export class UserPresenter implements IUserPresenter {
@@ -11,11 +11,13 @@ export class UserPresenter implements IUserPresenter {
 
   async createUser(
     userInput: CreateUserDtoInput
-  ): Promise<CreateUserDtoOutput> {
-    const userOutput = await this.useCases.createUser(userInput);
+  ): Promise<ICreateUserDtoOutput> {
+    try {
+      return this.useCases.createUser(userInput);
+    } catch (error) {
+      const { message } = error as FirebaseError;
 
-    const user = new User(userOutput);
-
-    return user;
+      throw Error(message);
+    }
   }
 }

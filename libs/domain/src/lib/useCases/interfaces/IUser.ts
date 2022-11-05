@@ -1,5 +1,5 @@
-import { ICreateUserDtoInput, ICreateUserDtoOutput } from '../../dto';
+import { ICreateUserDtoInput } from '../../dto';
 
 export interface IUserUseCase {
-  createUser(userDto: ICreateUserDtoInput): Promise<ICreateUserDtoOutput>;
+  createUser(userDto: ICreateUserDtoInput): Promise<void>;
 }

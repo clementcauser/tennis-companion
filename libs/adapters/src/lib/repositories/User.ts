@@ -1,34 +1,26 @@
 import {
-  CreateUserDtoInput,
+  ICreateUserDtoInput,
+  ICreateUserDtoOutput,
   IUserData,
   IUserRepository,
   User,
 } from '@tennis-companion/domain';
 import { Firebase, FirebasePath } from '@tennis-companion/firebase';
 import { FirebaseError } from 'firebase/app';
-import {
-  createUserWithEmailAndPassword,
-  User as FirebaseUser,
-} from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 
 export class UserRepository implements IUserRepository {
   constructor(private readonly firebase: Firebase) {}
 
-  async createUser({
+  async createUserWithEmailAndPassword({
     email,
     password,
-  }: CreateUserDtoInput): Promise<FirebaseUser> {
+  }: ICreateUserDtoInput): Promise<ICreateUserDtoOutput> {
     const firebaseAuth = this.firebase.getAuth();
 
     try {
-      const { user } = await createUserWithEmailAndPassword(
-        firebaseAuth,
-        email,
-        password
-      );
-
-      return user;
+      await createUserWithEmailAndPassword(firebaseAuth, email, password);
     } catch (err) {
       const error = err as FirebaseError;
 

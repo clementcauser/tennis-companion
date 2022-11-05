@@ -3,6 +3,8 @@ import Head from 'next/head';
 import { Provider } from 'react-redux';
 import { store } from '../store';
 import './styles.css';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 function CustomApp({ Component, pageProps }: AppProps) {
   return (
@@ -13,6 +15,7 @@ function CustomApp({ Component, pageProps }: AppProps) {
       <main className="app">
         <Provider store={store}>
           <Component {...pageProps} />
+          <ToastContainer position="bottom-right" />
         </Provider>
       </main>
     </>
